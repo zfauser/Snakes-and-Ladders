@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+**/build/*
+**/.vscode/*
+**/.breakpoints
+**/main.dSYM/*
+**/run.sh
+**/.ccls-cache/*
+main
+old.txt
