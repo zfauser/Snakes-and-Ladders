@@ -1,3 +1,5 @@
+// todo: add instructions, comments, and play again
+
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -155,22 +157,22 @@ void checkSnakeLadderOverlap() {
           snakePosLower.at(i) == ladderPosUpper.at(j) ||
           snakePosLower.at(i) == ladderPosLower.at(j)) {
         snakePosUpper.at(i) = getRand(10, 99);
-        snakePosLower.at(i) = getRand(1, snakePosUpper.at(i) - 10);
+        snakePosLower.at(i) = getRand(1, snakePosUpper.at(i) - 9);
+        j = 0;
       }
     }
   }
 }
 
 void genSnakes() {
-  snakeCount = getRand(3, 7);
+  snakeCount = getRand(3, 5);
   for (int i = 0; i < snakeCount; i++) {
     int upper = getRand(10, 99);
-    int lower = getRand(1, upper - 10);
-
+    int lower = getRand(1, upper - 9);
     for (int j = 0; j < snakePosLower.size(); j++) {
       // if the snake overlaps with another snake, generate a new snake
-      while (lower == snakePosLower[j] || upper == snakePosUpper[j]) {
-        lower = getRand(1, upper - 10);
+      if (lower == snakePosLower[j] || upper == snakePosUpper[j]) {
+        lower = getRand(1, upper - 9);
         j = 0; // recheck new snake against all other snakes
       }
     }
@@ -187,7 +189,7 @@ void genLadders() {
     int upper = getRand(lower + 10, 100);
 
     for (int j = 0; j < ladderPosLower.size(); j++) {
-      while (lower == ladderPosLower[j] || upper == ladderPosUpper[j]) {
+      if (lower == ladderPosLower[j] || upper == ladderPosUpper[j]) {
         lower = getRand(1, 90);
         upper = getRand(lower + 10, 100);
         j = 0;
@@ -348,11 +350,11 @@ int main() {
   compInitial = getFirstInitial(compName);
   userHorT = getUserHorT();
   usersTurn = flipCoin();
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
-  waitForAnyKey();
   genSnakes();
   genLadders();
   checkSnakeLadderOverlap();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  waitForAnyKey();
   while (userPos < 100 && compPos < 100) {
     turn();
     waitForAnyKey();
