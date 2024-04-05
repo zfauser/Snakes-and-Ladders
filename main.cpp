@@ -273,6 +273,7 @@ void genSnakes()
       // if the snake overlaps with another snake, generate a new snake
       if (lower == snakePosLower[j] || upper == snakePosUpper[j])
       {
+        upper = getRand(10, 99);
         lower = getRand(1, upper - 9);
         j = 0; // recheck new snake against all other snakes
       }
