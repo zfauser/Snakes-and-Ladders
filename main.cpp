@@ -26,9 +26,9 @@ int userPos = 0;
 int compPos = 0;
 char userInitial;
 char compInitial;
-string compNames[] = {"Elon Musk", "Bill Gates", "Jeff Bezos",
-                      "Mark Zuckerberg", "Joe Biden", "Taylor Swift",
-                      "Olivia Rodrigo", "Allan N. Caughey", "Xi Jinping",
+string compNames[] = {"Elon Musk",        "Bill Gates",       "Jeff Bezos",
+                      "Mark Zuckerberg",  "Joe Biden",        "Taylor Swift",
+                      "Olivia Rodrigo",   "Allan N. Caughey", "Xi Jinping",
                       "Bjarne Stroustrup"};
 vector<int> snakePosUpper;
 vector<int> snakePosLower;
@@ -59,8 +59,7 @@ string getName()
   string tempName;
   cout << "What's your name: " << BLUE;
   getline(cin, tempName);
-  while (tempName.empty())
-  {
+  while (tempName.empty()) {
     cout << RED << "Invalid input. Please enter a valid name: " << BLUE;
     getline(cin, tempName);
   }
@@ -68,7 +67,7 @@ string getName()
   return tempName;
 }
 
-int getRand(int min, int max) 
+int getRand(int min, int max)
 /*
   Args:
     min (int): the minimum value that can be chosen
@@ -80,7 +79,7 @@ int getRand(int min, int max)
   return rand() % (max - min + 1) + min;
 }
 
-string getCompName() 
+string getCompName()
 /*
   Returns:
     string: Returns a random name for the computer from the compNames array
@@ -99,17 +98,14 @@ int getUserHorT()
   cout << "Heads or Tails? (H/T): ";
   getline(cin, tempUsersChoice);
   while ((tempUsersChoice != "H" && tempUsersChoice != "T" &&
-         tempUsersChoice != "h" && tempUsersChoice != "t") || cin.fail() || tempUsersChoice.empty())
-  {
+          tempUsersChoice != "h" && tempUsersChoice != "t") ||
+         cin.fail() || tempUsersChoice.empty()) {
     cout << RED << "Invalid choice. Please enter H or T: " << RESET;
     getline(cin, tempUsersChoice);
   }
-  if (tempUsersChoice == "H" || tempUsersChoice == "h")
-  {
+  if (tempUsersChoice == "H" || tempUsersChoice == "h") {
     return 0;
-  }
-  else
-  {
+  } else {
     return 1;
   }
 }
@@ -135,76 +131,65 @@ void printBoard(int uPos, int aiPos)
 */
 {
   // use  i-- in order to print from 100 down to 1
-  for (int i = 9; i >= 0; i--)
-  {
-    for (int j = 0; j < 10; j++)
-    {
+  for (int i = 9; i >= 0; i--) {
+    for (int j = 0; j < 10; j++) {
       int cell;
       // if row is even, print from left to right
-      if (i % 2 == 0)
-      {
+      if (i % 2 == 0) {
         cell = i * 10 + j + 1;
       }
       // otherwise, print from right to left
-      else
-      {
+      else {
         cell = i * 10 + 10 - j;
       }
       cout << "| ";
       // if both user and computer are at the same position, print both initials
-      if (cell == uPos && cell == aiPos)
-      {
+      if (cell == uPos && cell == aiPos) {
         cout << BLUE << setw(3) << userInitial << RED << compInitial << RESET;
       }
       // otherwise, if the cell is the user's position, print the user's initial
-      else if (cell == uPos)
-      {
+      else if (cell == uPos) {
         cout << BLUE << setw(4) << userInitial << RESET;
       }
       // otherwise, if the cell is the computer's position, print the computer's
       // initial
-      else if (cell == aiPos)
-      {
+      else if (cell == aiPos) {
         cout << RED << setw(4) << compInitial << RESET;
       }
       // otherwise...
-      else
-      {
+      else {
         bool isSnakeOrLadder = false;
         // check if the cell is a snake
-        for (int k = 0; k < snakeCount; k++)
-        {
-          // if the cell is the top of a snake, print the snake number in bright green
-          if (cell == snakePosUpper[k])
-          {
+        for (int k = 0; k < snakeCount; k++) {
+          // if the cell is the top of a snake, print the snake number in bright
+          // green
+          if (cell == snakePosUpper[k]) {
             cout << BRIGHT_GREEN << setw(4) << "S" + to_string(k + 1) << RESET;
             isSnakeOrLadder = true;
             break;
           }
-          // if the cell is the bottom of a snake, print the snake number in green
-          else if (cell == snakePosLower[k])
-          {
+          // if the cell is the bottom of a snake, print the snake number in
+          // green
+          else if (cell == snakePosLower[k]) {
             cout << GREEN << setw(4) << "s" + to_string(k + 1) << RESET;
             isSnakeOrLadder = true;
             break;
           }
         }
         // if not a snake, check if the cell is a ladder
-        if (!isSnakeOrLadder)
-        {
-          for (int k = 0; k < ladderCount; k++)
-          {
-            if (cell == ladderPosUpper[k])
-            {
-              // if the cell is the top of a ladder, print the ladder number in bright magenta
+        if (!isSnakeOrLadder) {
+          for (int k = 0; k < ladderCount; k++) {
+            if (cell == ladderPosUpper[k]) {
+              // if the cell is the top of a ladder, print the ladder number in
+              // bright magenta
               cout << BRIGHT_MAGENTA << setw(4) << "L" + to_string(k + 1)
                    << RESET;
               isSnakeOrLadder = true;
               break;
             }
-            // if the cell is the bottom of a ladder, print the ladder number in magenta
-            else if (cell == ladderPosLower[k])
-            {
+            // if the cell is the bottom of a ladder, print the ladder number in
+            // magenta
+            else if (cell == ladderPosLower[k]) {
               cout << MAGENTA << setw(4) << "l" + to_string(k + 1) << RESET;
               isSnakeOrLadder = true;
               break;
@@ -212,8 +197,7 @@ void printBoard(int uPos, int aiPos)
           }
         }
         // if not a snake or ladder, print the cell number
-        if (!isSnakeOrLadder)
-        {
+        if (!isSnakeOrLadder) {
           cout << setw(4) << cell;
         }
       }
@@ -225,7 +209,8 @@ void printBoard(int uPos, int aiPos)
 void printPos()
 /*
   Output:
-    Prints the positions of the user and computer on the board and the board itself
+    Prints the positions of the user and computer on the board and the board
+  itself
 */
 {
   cout << BLUE << name << " is at position " << userPos << RESET << endl;
@@ -236,19 +221,17 @@ void printPos()
 void checkSnakeLadderOverlap()
 /*
   Purpose:
-    Checks if any snakes and ladders overlap. If they do, generate a new snake until there are no overlaps.
+    Checks if any snakes and ladders overlap. If they do, generate a new snake
+  until there are no overlaps.
 */
 {
-  for (int i = 0; i < snakeCount; i++)
-  {
-    for (int j = 0; j < ladderCount; j++)
-    {
+  for (int i = 0; i < snakeCount; i++) {
+    for (int j = 0; j < ladderCount; j++) {
       // if a snake and ladder overlap, generate a new snake
       if (snakePosUpper.at(i) == ladderPosUpper.at(j) ||
           snakePosUpper.at(i) == ladderPosLower.at(j) ||
           snakePosLower.at(i) == ladderPosUpper.at(j) ||
-          snakePosLower.at(i) == ladderPosLower.at(j))
-      {
+          snakePosLower.at(i) == ladderPosLower.at(j)) {
         snakePosUpper.at(i) = getRand(10, 99);
         snakePosLower.at(i) = getRand(1, snakePosUpper.at(i) - 9);
         j = 0;
@@ -260,19 +243,17 @@ void checkSnakeLadderOverlap()
 void genSnakes()
 /*
   Purpose:
-    Generates a random number of snakes between 3 and 5 and assigns them random positions on the board.
+    Generates a random number of snakes between 3 and 5 and assigns them random
+  positions on the board.
 */
 {
   snakeCount = getRand(3, 5);
-  for (int i = 0; i < snakeCount; i++)
-  {
+  for (int i = 0; i < snakeCount; i++) {
     int upper = getRand(10, 99);
     int lower = getRand(1, upper - 9);
-    for (int j = 0; j < snakePosLower.size(); j++)
-    {
+    for (int j = 0; j < snakePosLower.size(); j++) {
       // if the snake overlaps with another snake, generate a new snake
-      if (lower == snakePosLower[j] || upper == snakePosUpper[j])
-      {
+      if (lower == snakePosLower[j] || upper == snakePosUpper[j]) {
         upper = getRand(10, 99);
         lower = getRand(1, upper - 9);
         j = 0; // recheck new snake against all other snakes
@@ -287,20 +268,18 @@ void genSnakes()
 void genLadders()
 /*
   Purpose:
-    Generates a random number of ladders between 3 and 7 and assigns them random positions on the board.
+    Generates a random number of ladders between 3 and 7 and assigns them random
+  positions on the board.
 */
 {
   ladderCount = getRand(3, 7);
-  for (int i = 0; i < ladderCount; i++)
-  {
+  for (int i = 0; i < ladderCount; i++) {
     int lower = getRand(1, 90);
     int upper = getRand(lower + 10, 100);
 
-    for (int j = 0; j < ladderPosLower.size(); j++)
-    {
+    for (int j = 0; j < ladderPosLower.size(); j++) {
       // if the ladder overlaps with another ladder, generate a new ladder
-      if (lower == ladderPosLower[j] || upper == ladderPosUpper[j])
-      {
+      if (lower == ladderPosLower[j] || upper == ladderPosUpper[j]) {
         lower = getRand(1, 90);
         upper = getRand(lower + 10, 100);
         j = 0;
@@ -317,41 +296,34 @@ int checkSnakesLadders(int pos)
   Args:
     pos (int): the position of the user or computer
   Returns:
-    int: the new position of the user or computer after checking for snakes and ladders
+    int: the new position of the user or computer after checking for snakes and
+  ladders
 */
 {
-  for (int i = 0; i < snakeCount; i++)
-  {
-    // if the user or computer lands on a snake, move them to the end of the snake
-    if (pos == snakePosUpper.at(i))
-    {
+  for (int i = 0; i < snakeCount; i++) {
+    // if the user or computer lands on a snake, move them to the end of the
+    // snake
+    if (pos == snakePosUpper.at(i)) {
       pos = snakePosLower.at(i);
-      if (usersTurn)
-      {
-        cout << BLUE << name << " landed on a snake! " << name << " is now at position "
-             << pos << RESET << endl;
-      }
-      else
-      {
+      if (usersTurn) {
+        cout << BLUE << name << " landed on a snake! " << name
+             << " is now at position " << pos << RESET << endl;
+      } else {
         cout << RED << compName << " landed on a snake! " << compName
              << " is now at position " << pos << RESET << endl;
       }
       return pos;
     }
   }
-  for (int i = 0; i < ladderCount; i++)
-  {
-    // if the user or computer lands on a ladder, move them to the top of the ladder
-    if (pos == ladderPosLower.at(i))
-    {
+  for (int i = 0; i < ladderCount; i++) {
+    // if the user or computer lands on a ladder, move them to the top of the
+    // ladder
+    if (pos == ladderPosLower.at(i)) {
       pos = ladderPosUpper.at(i);
-      if (usersTurn)
-      {
+      if (usersTurn) {
         cout << BLUE << name << " landed on a ladder! " << name
              << " is now at position " << pos << RESET << endl;
-      }
-      else
-      {
+      } else {
         cout << RED << compName << " landed on a ladder! " << compName
              << " is now at position " << pos << RESET << endl;
       }
@@ -364,7 +336,9 @@ int checkSnakesLadders(int pos)
 void turn()
 /*
   Purpose:
-    This is what is run when it is the user's or computer's turn. It rolls a dice, moves the user or computer, checks for snakes and ladders, and prints the position of the user and computer.
+    This is what is run when it is the user's or computer's turn. It rolls a
+  dice, moves the user or computer, checks for snakes and ladders, and prints
+  the position of the user and computer.
 */
 {
   // clear screen using:
@@ -372,37 +346,32 @@ void turn()
   cout << "\033[2J\033[1;1H";
   int roll = getRand(1, 6);
   // if it is the user's turn
-  if (usersTurn)
-  {
+  if (usersTurn) {
     cout << BLUE << name << " rolled a " << roll << "!\n" << RESET;
     // if the user hasn't rolled a 6 yet, they need to roll a 6 to start moving
-    if (!userRolled6)
-    {
-      if (roll == 6)
-      {
+    if (!userRolled6) {
+      if (roll == 6) {
         userRolled6 = true;
-      }
-      else
-      {
+      } else {
         userRolled6 = false;
       }
     }
     // if the user has rolled a 6, they can start moving
-    if (userRolled6)
-    {
+    if (userRolled6) {
       userPos += roll;
       userPos = checkSnakesLadders(userPos);
       // if the user reaches 100, they win
-      if (userPos == 100)
-      {
+      if (userPos == 100) {
         userWon = true;
         printPos();
         cout << BLUE << name << " wins!\n" << RESET;
-        cout << BOLD << "You are about to be redirected to a page with an image, please return to this window after you are finished looking at the image\n" << RESET;
+        cout << BOLD
+             << "You are about to be redirected to a page with an image, "
+                "please return to this window after you are finished looking "
+                "at the image\n"
+             << RESET;
         return;
-      }
-      else if (userPos > 100)
-      {
+      } else if (userPos > 100) {
         userPos = userPos - roll;
       }
     }
@@ -412,38 +381,33 @@ void turn()
     } else {
       usersTurn = true;
     }
-  }
-  else
-  {
+  } else {
     cout << RED << compName << " rolled a " << roll << "!\n" << RESET;
-    // if the computer hasn't rolled a 6 yet, they need to roll a 6 to start moving
-    if (!compRolled6)
-    {
-      if (roll == 6)
-      {
+    // if the computer hasn't rolled a 6 yet, they need to roll a 6 to start
+    // moving
+    if (!compRolled6) {
+      if (roll == 6) {
         compRolled6 = true;
-      }
-      else
-      {
+      } else {
         compRolled6 = false;
       }
     }
     // if the computer has rolled a 6, they can start moving
-    if (compRolled6)
-    {
+    if (compRolled6) {
       compPos += roll;
       compPos = checkSnakesLadders(compPos);
       // if the computer reaches 100, they win
-      if (compPos == 100)
-      {
+      if (compPos == 100) {
         userWon = false;
         printPos();
         cout << RED << compName << " wins!\n" << RESET;
-        cout << BOLD << "You are about to be redirected to a page with an image, please return to this window after you are finished looking at the image\n" << RESET;
+        cout << BOLD
+             << "You are about to be redirected to a page with an image, "
+                "please return to this window after you are finished looking "
+                "at the image\n"
+             << RESET;
         return;
-      }
-      else if (compPos > 100)
-      {
+      } else if (compPos > 100) {
         compPos = compPos - roll;
       }
     }
@@ -474,21 +438,15 @@ bool flipCoin()
 */
 {
   int coin = getRand(0, 1);
-  if (coin == 0)
-  {
+  if (coin == 0) {
     cout << "The coin landed on Heads!\n";
-  }
-  else
-  {
+  } else {
     cout << "The coin landed on Tails!\n";
   }
-  if (coin == userHorT)
-  {
+  if (coin == userHorT) {
     cout << BLUE << name << " goes first!\n" << RESET;
     return true;
-  }
-  else
-  {
+  } else {
     cout << RED << compName << " goes first!\n" << RESET;
     return false;
   }
@@ -502,50 +460,28 @@ void redirectToWinScreen()
 {
   string url;
   // Open the browser with the winner's image
-  if (userWon)
-  {
+  if (userWon) {
     url = youURL;
-  }
-  else
-  {
-    if (compName == "Elon Musk")
-    {
+  } else {
+    if (compName == "Elon Musk") {
       url = elonURL;
-    }
-    else if (compName == "Bill Gates")
-    {
+    } else if (compName == "Bill Gates") {
       url = billURL;
-    }
-    else if (compName == "Jeff Bezos")
-    {
+    } else if (compName == "Jeff Bezos") {
       url = jeffURL;
-    }
-    else if (compName == "Mark Zuckerberg")
-    {
+    } else if (compName == "Mark Zuckerberg") {
       url = markURL;
-    }
-    else if (compName == "Joe Biden")
-    {
+    } else if (compName == "Joe Biden") {
       url = joeURL;
-    }
-    else if (compName == "Taylor Swift")
-    {
+    } else if (compName == "Taylor Swift") {
       url = taylorURL;
-    }
-    else if (compName == "Olivia Rodrigo")
-    {
+    } else if (compName == "Olivia Rodrigo") {
       url = oliviaURL;
-    }
-    else if (compName == "Allan N. Caughey")
-    {
+    } else if (compName == "Allan N. Caughey") {
       url = allanURL;
-    }
-    else if (compName == "Xi Jinping")
-    {
+    } else if (compName == "Xi Jinping") {
       url = xiURL;
-    }
-    else if (compName == "Bjarne Stroustrup")
-    {
+    } else if (compName == "Bjarne Stroustrup") {
       url = bjarneURL;
     }
   }
@@ -553,23 +489,23 @@ void redirectToWinScreen()
   (void)system(command.c_str());
 }
 
-bool askPlayAgain() 
+bool askPlayAgain()
 /*
   Returns:
-    bool: true if the user wants to play again, false if the user doesn't want to play again
+    bool: true if the user wants to play again, false if the user doesn't want
+  to play again
 */
 {
   string playAgainChoice;
   cout << "Would you like to play again? (Y/N): ";
   getline(cin, playAgainChoice);
   while ((playAgainChoice != "Y" && playAgainChoice != "N" &&
-         playAgainChoice != "y" && playAgainChoice != "n") || cin.fail() || playAgainChoice.empty())
-  {
+          playAgainChoice != "y" && playAgainChoice != "n") ||
+         cin.fail() || playAgainChoice.empty()) {
     cout << RED << "Invalid choice. Please enter Y or N: " << RESET;
     getline(cin, playAgainChoice);
   }
-  if (playAgainChoice == "Y" || playAgainChoice == "y")
-  {
+  if (playAgainChoice == "Y" || playAgainChoice == "y") {
     userRolled6 = false;
     compRolled6 = false;
     userPos = 0;
@@ -580,32 +516,36 @@ bool askPlayAgain()
     ladderPosUpper.clear();
     ladderPosLower.clear();
     return true;
-  }
-  else
-  {
+  } else {
     cout << "Hope you had fun playing Snakes and Ladders! Goodbye!";
     return false;
   }
-
 }
 
 int main()
 /*
   Purpose:
-    The main function of the program. It welcomes the user and explains the rules of the game. It then runs the necessary functions until the user decides to stop playing.
+    The main function of the program. It welcomes the user and explains the
+  rules of the game. It then runs the necessary functions until the user decides
+  to stop playing.
 */
 {
   srand(time(0));
   cout << YELLOW << BOLD << "Welcome to Snakes and Ladders!\n\n" << RESET;
   cout << BOLD << "Rules:\n" << RESET;
-  cout << "The goal of the game is to reach the 100th square before your opponent does. You must roll to exactly 100 (i.e if you are on space 99 you need to roll a 1, if you roll more you will not move)\n";
-  cout << "You must roll a 6 to start moving and if you roll a 6 during the game you continue rolling.\n";
-  cout << "If you land on a snake (uppercase S), you will go down to the tail of the snake (lowercase s).\n";
-  cout << "If you land on a ladder (lowercase l), you will go up to the top of the ladder (uppercase L).\n\n";
+  cout
+      << "The goal of the game is to reach the 100th square before your "
+         "opponent does. You must roll to exactly 100 (i.e if you are on space "
+         "99 you need to roll a 1, if you roll more you will not move)\n";
+  cout << "You must roll a 6 to start moving and if you roll a 6 during the "
+          "game you continue rolling.\n";
+  cout << "If you land on a snake (uppercase S), you will go down to the tail "
+          "of the snake (lowercase s).\n";
+  cout << "If you land on a ladder (lowercase l), you will go up to the top of "
+          "the ladder (uppercase L).\n\n";
   name = getName();
   cout << "Howdy there, " << BLUE << name << RESET << "!\n";
-  while (playAgain)
-  {
+  while (playAgain) {
     compName = getCompName();
     cout << "You will be playing against " << RED << compName << RESET << "!\n";
     userInitial = getFirstInitial(name);
@@ -616,8 +556,7 @@ int main()
     genLadders();
     checkSnakeLadderOverlap();
     waitForEnter();
-    while (userPos < 100 && compPos < 100)
-    {
+    while (userPos < 100 && compPos < 100) {
       turn();
       waitForEnter();
     }
