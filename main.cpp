@@ -264,16 +264,23 @@ void genSnakes()
 */
 {
   snakeCount = getRand(3, 5);
+  cout << "snakeCount success\n " << "snakeCount: " << snakeCount << "\n";
   for (int i = 0; i < snakeCount; i++)
   {
     int upper = getRand(10, 99);
+    cout << "upper success\n " << "upper: " << upper << "\n";
     int lower = getRand(1, upper - 9);
+    cout << "lower success\n " << "lower: " << lower << "\n";
     for (int j = 0; j < snakePosLower.size(); j++)
     {
       // if the snake overlaps with another snake, generate a new snake
       if (lower == snakePosLower[j] || upper == snakePosUpper[j])
       {
+        cout << "lower == snakePosLower[j] || upper == snakePosUpper[j]\n";
         lower = getRand(1, upper - 9);
+        cout << "lower success\n " << "lower: " << lower << "\n";
+        // upper = getRand(10, 99);
+        // cout << "upper success\n " << "upper: " << upper << "\n";
         j = 0; // recheck new snake against all other snakes
       }
     }
@@ -558,17 +565,17 @@ bool askPlayAgain()
     bool: true if the user wants to play again, false if the user doesn't want to play again
 */
 {
-  string playAgainChoice;
-  cout << "Would you like to play again? (Y/N): ";
-  getline(cin, playAgainChoice);
-  while ((playAgainChoice != "Y" && playAgainChoice != "N" &&
-         playAgainChoice != "y" && playAgainChoice != "n") || cin.fail() || playAgainChoice.empty())
-  {
-    cout << RED << "Invalid choice. Please enter Y or N: " << RESET;
-    getline(cin, playAgainChoice);
-  }
-  if (playAgainChoice == "Y" || playAgainChoice == "y")
-  {
+  // string playAgainChoice;
+  // cout << "Would you like to play again? (Y/N): ";
+  // getline(cin, playAgainChoice);
+  // while ((playAgainChoice != "Y" && playAgainChoice != "N" &&
+  //        playAgainChoice != "y" && playAgainChoice != "n") || cin.fail() || playAgainChoice.empty())
+  // {
+  //   cout << RED << "Invalid choice. Please enter Y or N: " << RESET;
+  //   getline(cin, playAgainChoice);
+  // }
+  // if (playAgainChoice == "Y" || playAgainChoice == "y")
+  // {
     userRolled6 = false;
     compRolled6 = false;
     userPos = 0;
@@ -579,12 +586,12 @@ bool askPlayAgain()
     ladderPosUpper.clear();
     ladderPosLower.clear();
     return true;
-  }
-  else
-  {
-    cout << "Hope you had fun playing Snakes and Ladders! Goodbye!";
-    return false;
-  }
+  // }
+  // else
+  // {
+  //   cout << "Hope you had fun playing Snakes and Ladders! Goodbye!";
+  //   return false;
+  // }
 
 }
 
@@ -606,21 +613,31 @@ int main()
   while (playAgain)
   {
     compName = getCompName();
+    cout << GREEN << "getCompName(): success\n" << RESET;
     cout << "You will be playing against " << RED << compName << RESET << "!\n";
     userInitial = getFirstInitial(name);
+    cout << GREEN << "getFirstInitial(name): success\n" << RESET;
     compInitial = getFirstInitial(compName);
-    userHorT = getUserHorT();
+    cout << GREEN << "getFirstInitial(compName): success\n" << RESET;
+    // userHorT = getUserHorT();
+    userHorT = 1;
+    cout << GREEN << "getUserHorT(): success\n" << RESET;
     usersTurn = flipCoin();
+    cout << GREEN << "flipCoin(): success\n" << RESET;
     genSnakes();
+    cout << GREEN << "genSnakes(): success\n" << RESET;
     genLadders();
+    cout << GREEN << "genLadders(): success\n" << RESET;
     checkSnakeLadderOverlap();
+    cout << GREEN << "checkSnakeLadderOverlap(): success\n" << RESET;
     waitForEnter();
-    while (userPos < 100 && compPos < 100)
-    {
-      turn();
-      waitForEnter();
-    }
-    redirectToWinScreen();
+    // while (userPos < 100 && compPos < 100)
+    // {
+    //   turn();
+    //   waitForEnter();
+    // }
+    // redirectToWinScreen();
     playAgain = askPlayAgain();
+    cout << "\033[2J\033[1;1H";
   }
 }
